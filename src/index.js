@@ -1,17 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import './App.css'
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
   <React.StrictMode>
-    <App />
+    <GoogleReCaptchaProvider
+      reCaptchaKey='6LcRLocqAAAAAJS6nXWzXbYLuYjLbqgLdHInE-4N'
+      scriptProps={{
+        async: true,
+        defer: true,
+        onLoad: () => console.log("✅ reCAPTCHA script loaded successfully!"),
+      }}
+      onScriptLoadError={(error) => {
+        console.error("❌ reCAPTCHA script failed to load:", error);
+        alert("Error loading reCAPTCHA. Please try refreshing the page.");
+      }}
+    >
+      <App />
+    </GoogleReCaptchaProvider>
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
